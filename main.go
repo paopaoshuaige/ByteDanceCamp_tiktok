@@ -1,16 +1,14 @@
 package main
 
 import (
-	"github.com/RaymondCode/simple-demo/service"
+	"ByteDanceCamp_tiktok/dao"
+	"ByteDanceCamp_tiktok/router"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	go service.RunMessageServer()
-
+	dao.InitDB()
 	r := gin.Default()
-
-	initRouter(r)
-
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	router.InitTikTokRouter(r)
+	r.Run(":8989")
 }
