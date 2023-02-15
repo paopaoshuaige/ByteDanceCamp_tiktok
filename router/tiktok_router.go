@@ -1,6 +1,9 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"ByteDanceCamp_tiktok/controller"
+	"github.com/gin-gonic/gin"
+)
 
 func InitTikTokRouter(r *gin.Engine) {
 	// 静态路由
@@ -8,7 +11,7 @@ func InitTikTokRouter(r *gin.Engine) {
 
 	tkGroup := r.Group("/douyin")
 	// 视频推送
-	tkGroup.GET("/feed/")
+	tkGroup.GET("/feed/", controller.Feed)
 	// 视频列表
 	tkGroup.GET("/publish/list/")
 	// 发布视频

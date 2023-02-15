@@ -17,11 +17,11 @@ func InitDB() {
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 	if err != nil {
-		log.Panicln("err:", err.Error())
+		log.Panicln("DBlink error", err.Error())
 	}
 	// 自动根据结构体创建表
-	//err = DB.AutoMigrate(&UserInfo{}, &Video{}, &Comment{}, &UserLogin{})
-	//if err != nil {
-	//	log.Panicln("err:", err.Error())
-	//}
+	err = DB.AutoMigrate(&User{}, &Video{}, &Like{}, &Follow{}, &Comment{})
+	if err != nil {
+		log.Panicln("DBMigrate error", err.Error())
+	}
 }
