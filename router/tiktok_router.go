@@ -17,11 +17,11 @@ func InitTikTokRouter(r *gin.Engine) {
 	// 发布视频
 	tkGroup.POST("/publish/action/")
 	// 用户信息
-	tkGroup.GET("/user/")
+	tkGroup.GET("/user/", controller.QueryUserInfo)
 	// 注册
-	tkGroup.POST("/user/register/")
+	tkGroup.POST("/user/register/", controller.Register)
 	// 登录
-	tkGroup.POST("/user/login/")
+	tkGroup.POST("/user/login/", controller.Login)
 
 	// 互动方向
 	// 点赞

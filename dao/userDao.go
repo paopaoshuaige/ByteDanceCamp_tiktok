@@ -1,6 +1,8 @@
 package dao
 
-import "sync"
+import (
+	"sync"
+)
 
 var (
 	userDao  *UserDAO
@@ -32,4 +34,30 @@ func (u *UserDAO) QueryUserById(id int64) (*User, error) {
 	user := &User{}
 	err := DB.First(user, "Id = ?", id).Error
 	return user, err
+}
+
+// AddUser 添加用户
+func (u *UserDAO) AddUser(user *User) int {
+	if u.userCheck(user) {
+		return 1
+	}
+	if err := DB.Create(user).Error; err != nil {
+		return 2
+	}
+	return 0
+}
+
+// QueryUserByName 根据用户名查询是否存在
+func (u *UserDAO) QueryUserByName(name string) (*User, bool) {
+	var user User
+	err := DB.Where(&User{Name: name}, "name").First(&user).Error
+	if err != nil {
+		return nil, false
+	}
+	return &user, true
+}
+
+// userCheck 查询用户名是否重复
+func (u *UserDAO) userCheck(user *User) bool {
+	return DB.Model(&User{}).Where("name =?", user.Name).First(&User{}).Error == nil
 }

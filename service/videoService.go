@@ -1,7 +1,6 @@
 package service
 
 import (
-	"ByteDanceCamp_tiktok/dao"
 	"ByteDanceCamp_tiktok/utils"
 	"strconv"
 	"time"
@@ -26,13 +25,6 @@ type VideoDisplay struct {
 	CreatedAt     time.Time `json:"-"`                                  // 创建时间
 	UpdatedAt     time.Time `json:"-"`                                  // 更新时间
 }
-
-var (
-	videoDao  = dao.NewVideoDao()
-	likeDao   = dao.NewLikeDao()
-	userDao   = dao.NewUserInfoDAO()
-	followDao = dao.NewFollowDao()
-)
 
 // VideoData 视频信息
 type VideoData struct {
