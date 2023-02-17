@@ -23,7 +23,7 @@ type Claims struct {
 
 // SignToken 生成token并返回
 func SignToken(id int64, name string) (string, error) {
-	expirationTime := time.Now().Add(300 * time.Second)
+	expirationTime := time.Now().Add(1024 * time.Second)
 	claims := &Claims{
 		Username: name,
 		ID:       id,

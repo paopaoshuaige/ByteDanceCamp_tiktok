@@ -40,15 +40,16 @@ func (v *VideoDAO) AddVideo(video *Video) error {
 }
 
 // QueryVideoById 根据id搜索视频
-func (vd *VideoDAO) QueryVideosById(id int64) (*Video, error) {
+func (vd *VideoDAO) QueryVideoById(id int64) (*Video, error) {
 	var video Video
 	err := DB.Model(&Video{}).Where("id = ?", id).Find(&video).Error
 	return &video, err
 }
 
-func (vd *VideoDAO) QueryVideosByUserId(id int64) ([]Video, error) {
+// QueryVideoByUserId 根据用户id查询用户投稿的视频
+func (vd *VideoDAO) QueryVideoByUserId(id int64) ([]Video, error) {
 	videoList := make([]Video, 0, 30)
-	err := DB.Model(&Video{}).Where("author_id = ?", id).Order("created_at desc").Limit(30).Find(&videoList).Error
+	err := DB.Model(&Video{}).Where("author_id = ?", id).Order("created_at DESC").Limit(30).Find(&videoList).Error
 	return videoList, err
 }
 

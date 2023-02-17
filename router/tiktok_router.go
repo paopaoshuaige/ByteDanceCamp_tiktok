@@ -13,9 +13,9 @@ func InitTikTokRouter(r *gin.Engine) {
 	// 视频推送
 	tkGroup.GET("/feed/", controller.Feed)
 	// 视频列表
-	tkGroup.GET("/publish/list/")
+	tkGroup.GET("/publish/list/", controller.PublishList)
 	// 发布视频
-	tkGroup.POST("/publish/action/")
+	tkGroup.POST("/publish/action/", controller.Publish)
 	// 用户信息
 	tkGroup.GET("/user/", controller.QueryUserInfo)
 	// 注册

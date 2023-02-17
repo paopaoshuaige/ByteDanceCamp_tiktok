@@ -7,7 +7,7 @@ import (
 	"reflect"
 )
 
-// User
+// User 返回的用户信息表
 type User struct {
 	FollowCount   int64  `json:"follow_count,omitempty"`   // 关注总数
 	FollowerCount int64  `json:"follower_coun,omitemptyt"` // 粉丝总数
