@@ -43,8 +43,8 @@ func (p *PublishService) Publish() error {
 	// coverPath := "./static/covers/" + videoName
 	// coverName, _ := utils.CoverGenerator(videoPath, coverPath)
 
-	playURL := "http://192.168.124.6:8989/static/video/" + videoName
-	coverUrl := "http://192.168.124.6:8989/static/covers/img.png"
+	playURL := "http://172.20.10.3:8989/static/video/" + videoName
+	coverUrl := "http://172.20.10.3:8989/static/covers/img.png"
 	video := &dao.Video{
 		AuthorId: userId,
 		Title:    p.Title,
@@ -58,7 +58,7 @@ func (p *PublishService) Publish() error {
 }
 
 // PublishList 根据作者id和传入的id查询视频记录，并倒序列出
-func (p *PublishListService) PublishList() (*PublishListData, error) {
+func (p *PublishListService) PublishList() ([]VideoDisplay, error) {
 	userId, _ := strconv.ParseInt(p.UserId, 10, 64)
 	videoList, err := videoDao.QueryVideoByUserId(userId)
 	if err != nil {
@@ -81,5 +81,5 @@ func (p *PublishListService) PublishList() (*PublishListData, error) {
 		}
 		videoDisplayList = append(videoDisplayList, videoDisplay)
 	}
-	return &PublishListData{VideoList: videoDisplayList}, err
+	return videoDisplayList, err
 }

@@ -2,7 +2,6 @@ package controller
 
 import (
 	"ByteDanceCamp_tiktok/service"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"path/filepath"
@@ -11,7 +10,7 @@ import (
 // PublishResponse 当前用户视频发布列表json响应
 type PublishResponse struct {
 	Response
-	Data *service.PublishListData
+	VideoList []service.VideoDisplay `json:"video_list,omitempty"`
 }
 
 // Publish 上传视频
@@ -57,9 +56,8 @@ func Publish(c *gin.Context) {
 func PublishList(c *gin.Context) {
 	//获取用户id
 	userId := c.Query("user_id")
-	token := c.Query("token")
+	token := c.PostForm("token")
 	publishListData, err := service.NewPublishListService(userId, token).PublishList()
-	fmt.Println(publishListData)
 	if err != nil {
 		c.JSON(http.StatusOK, Response{
 			StatusCode: 1,
@@ -67,7 +65,7 @@ func PublishList(c *gin.Context) {
 		})
 	}
 	c.JSON(http.StatusOK, PublishResponse{
-		Response: Response{StatusCode: 0},
-		Data:     publishListData,
+		Response:  Response{StatusCode: 0},
+		VideoList: publishListData,
 	})
 }

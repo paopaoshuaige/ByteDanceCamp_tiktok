@@ -56,14 +56,14 @@ func (vd *VideoDAO) QueryVideoByUserId(id int64) ([]Video, error) {
 // QueryVideoByLatestTime 查询视频最新时间
 func (vd *VideoDAO) QueryVideoByLatestTime(latestTime int64) []Video {
 	var videoList []Video
-	timeStamp := time.UnixMilli(latestTime)
-	// 创建时间倒序
-	DB.Model(&Video{}).Where("created_at>=?", timeStamp).Order("created_at desc").Limit(30).Find(&videoList)
-
-	// 没有视频
-	if len(videoList) == 0 {
-		return nil
+	var LatestTime time.Time
+	if latestTime == 0 {
+		LatestTime = time.Now()
+	} else {
+		LatestTime = time.UnixMilli(latestTime)
 	}
+	// 创建时间倒序
+	DB.Model(&Video{}).Where("created_at<=?", LatestTime).Order("created_at asc").Limit(30).Find(&videoList)
 
 	return videoList
 }
