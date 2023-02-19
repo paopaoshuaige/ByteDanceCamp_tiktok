@@ -30,13 +30,13 @@ type UserLoginService struct {
 
 // UserRegisterData 用户注册信息
 type UserRegisterData struct {
-	Id    int64  `json:"user_id"`
+	Id    int64  `json:"user_id,omitempty"`
 	Token string `json:"token"`
 }
 
 // UserLoginData 用户登录信息
 type UserLoginData struct {
-	Id    int64  `json:"user_id"`
+	Id    int64  `json:"user_id,omitempty"`
 	Token string `json:"token"`
 }
 

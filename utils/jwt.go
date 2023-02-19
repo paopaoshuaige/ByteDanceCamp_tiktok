@@ -43,7 +43,7 @@ func ParseToken(token string) (int64, error) {
 	})
 
 	if err == nil && tk.Valid {
-		return claims.ID, nil
+		return claims.ID, err
 	}
 
 	return -1, err

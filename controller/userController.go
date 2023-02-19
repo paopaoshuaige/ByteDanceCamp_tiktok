@@ -11,13 +11,15 @@ import (
 // UserRegisterResponse 用户注册返回的json
 type UserRegisterResponse struct {
 	Response
-	Data *service.UserRegisterData
+	Id    int64  `json:"user_id,omitempty"`
+	Token string `json:"token"`
 }
 
 // UserLoginResponse 用户登录返回的json
 type UserLoginResponse struct {
 	Response
-	Data *service.UserLoginData
+	Id    int64  `json:"user_id,omitempty"`
+	Token string `json:"token"`
 }
 
 // UserInfoResponse 用户查询返回的响应
@@ -28,8 +30,8 @@ type UserInfoResponse struct {
 
 // Register 注册
 func Register(c *gin.Context) {
-	username := c.PostForm("username")
-	pass := c.PostForm("password")
+	username := c.Query("username")
+	pass := c.Query("password")
 
 	if !utils.CheckName(username) {
 		c.JSON(http.StatusOK, Response{
@@ -51,24 +53,25 @@ func Register(c *gin.Context) {
 	if flag == 0 {
 		c.JSON(http.StatusOK, UserRegisterResponse{
 			Response: Response{
-				StatusCode: int32(flag),
+				StatusCode: 0,
 				StatusMsg:  "Register success",
 			},
-			Data: userRegisterData,
+			Id:    userRegisterData.Id,
+			Token: userRegisterData.Token,
 		})
 	} else if flag == 1 {
 		c.JSON(http.StatusOK, Response{
-			StatusCode: int32(flag),
+			StatusCode: 1,
 			StatusMsg:  "Duplicate username",
 		})
 	} else if flag == 2 {
 		c.JSON(http.StatusOK, Response{
-			StatusCode: int32(flag),
+			StatusCode: 2,
 			StatusMsg:  "Register error",
 		})
 	} else {
 		c.JSON(http.StatusOK, Response{
-			StatusCode: int32(flag),
+			StatusCode: 3,
 			StatusMsg:  "token error",
 		})
 	}
@@ -76,8 +79,8 @@ func Register(c *gin.Context) {
 
 // Login 登录
 func Login(c *gin.Context) {
-	username := c.PostForm("username")
-	password := c.PostForm("password")
+	username := c.Query("username")
+	password := c.Query("password")
 	if !utils.CheckName(username) {
 		c.JSON(http.StatusOK, Response{
 			StatusCode: 1,
@@ -98,24 +101,25 @@ func Login(c *gin.Context) {
 	if flag == 0 {
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{
-				StatusCode: int32(flag),
+				StatusCode: 0,
 				StatusMsg:  "Login success",
 			},
-			Data: userLoginData,
+			Id:    userLoginData.Id,
+			Token: userLoginData.Token,
 		})
 	} else if flag == 1 {
 		c.JSON(http.StatusOK, Response{
-			StatusCode: int32(flag),
+			StatusCode: 1,
 			StatusMsg:  "username is incorrect",
 		})
 	} else if flag == 2 {
 		c.JSON(http.StatusOK, Response{
-			StatusCode: int32(flag),
+			StatusCode: 2,
 			StatusMsg:  "password is incorrect",
 		})
 	} else {
 		c.JSON(http.StatusOK, Response{
-			StatusCode: int32(flag),
+			StatusCode: 3,
 			StatusMsg:  "token error",
 		})
 	}
