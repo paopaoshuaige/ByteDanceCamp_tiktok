@@ -13,7 +13,7 @@
 
 ## 使用提示
 clone下来之后修改servce/conf的PlayURL为本机ip地址，修改dao/init_db的端口，user，password 以及创建表或者修改表名（该项目的表名为douyin）
-··· git
+···git
 git clone git@github.com:paopaoshuaige/ByteDanceCamp_tiktok.git
 go mod tidy
 ./main.go 
