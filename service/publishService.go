@@ -43,8 +43,8 @@ func (p *PublishService) Publish() error {
 	// coverPath := "./static/covers/" + videoName
 	// coverName, _ := utils.CoverGenerator(videoPath, coverPath)
 
-	playURL := "http://172.20.10.3:8989/static/video/" + videoName
-	coverUrl := "http://172.20.10.3:8989/static/covers/img.png"
+	playURL := "http://" + PlayURL + ":8989/static/video/" + videoName
+	coverUrl := "http://" + PlayURL + ":8989/static/covers/img.png"
 	video := &dao.Video{
 		AuthorId: userId,
 		Title:    p.Title,
