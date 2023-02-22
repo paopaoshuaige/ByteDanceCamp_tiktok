@@ -10,8 +10,6 @@ var (
 	followOnce sync.Once
 )
 
-// 关注用户信息
-// idx_author_id: 搜索用户所有投稿视频
 type Follow struct {
 	gorm.Model
 	FollowerID int64 `gorm:"not null; index:idx_follower" json:"follower_id"` // 被关注
