@@ -27,7 +27,7 @@ func Publish(c *gin.Context) {
 		return
 	}
 
-	if err = service.NewPublishService(token, title, data).Publish(); err != nil {
+	if err = service.Publish(token, title, data); err != nil {
 		c.JSON(http.StatusOK, Response{
 			StatusCode: 1,
 			StatusMsg:  err.Error(),
@@ -54,10 +54,10 @@ func Publish(c *gin.Context) {
 
 // PublishList 获取用户视频列表
 func PublishList(c *gin.Context) {
-	//获取用户id
+	// 获取用户id
 	userId := c.Query("user_id")
 	token := c.PostForm("token")
-	publishListData, err := service.NewPublishListService(userId, token).PublishList()
+	publishListData, err := service.PublishList(userId, token)
 	if err != nil {
 		c.JSON(http.StatusOK, Response{
 			StatusCode: 1,

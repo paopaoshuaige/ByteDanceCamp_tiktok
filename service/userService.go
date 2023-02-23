@@ -16,18 +16,6 @@ type User struct {
 	Name          string `json:"name,omitempty"`           // 用户名称
 }
 
-// UserRegisterService 用户注册
-type UserRegisterService struct {
-	Username string
-	Password string
-}
-
-// UserLoginService 用户登录
-type UserLoginService struct {
-	Username string
-	Password string
-}
-
 // UserRegisterData 用户注册信息
 type UserRegisterData struct {
 	Id    int64  `json:"user_id,omitempty"`
@@ -40,23 +28,8 @@ type UserLoginData struct {
 	Token string `json:"token"`
 }
 
-// UserInfoService 视频作者信息
-type UserInfoService struct {
-	Token string
-	Id    int64
-}
-
-// NewRegisterService 返回一个用户注册信息
-func NewRegisterService(username, pass string) *UserRegisterService {
-	return &UserRegisterService{Username: username, Password: pass}
-}
-
-// NewLoginService 返回用户登录信息
-func NewLoginService(username, pass string) *UserLoginService {
-	return &UserLoginService{Username: username, Password: pass}
-}
-
-func (u *UserRegisterService) Register() (*UserRegisterData, int) {
+// Register 注册
+func Register(Username, Password string) (*UserRegisterData, int) {
 	user := dao.User{}
 	salt := make([]byte, 32)
 	for i := range salt { // 生成随机数
@@ -64,8 +37,8 @@ func (u *UserRegisterService) Register() (*UserRegisterData, int) {
 	}
 	user.Salt = salt
 	// 对用户密码加密
-	user.Password = utils.Encrypt(u.Password, salt)
-	user.Name = u.Username
+	user.Password = utils.Encrypt(Password, salt)
+	user.Name = Username
 	flag := userDao.AddUser(&user)
 	if flag != 0 {
 		return nil, flag
@@ -78,14 +51,14 @@ func (u *UserRegisterService) Register() (*UserRegisterData, int) {
 }
 
 // Login 验证是否登陆成功
-func (u *UserLoginService) Login() (*UserLoginData, int) {
+func Login(Username, Password string) (*UserLoginData, int) {
 	// 查询用户名是否重复
-	user, f := userDao.QueryUserByName(u.Username)
+	user, f := userDao.QueryUserByName(Username)
 	if !f {
 		return nil, 1
 	}
 	// 加密
-	password := utils.Encrypt(u.Password, user.Salt)
+	password := utils.Encrypt(Password, user.Salt)
 	// 判断密码是否正确
 	if !reflect.DeepEqual(password, user.Password) {
 		return nil, 2

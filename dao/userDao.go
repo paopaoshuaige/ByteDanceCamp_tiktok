@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"gorm.io/gorm"
 	"sync"
 )
 
@@ -12,8 +13,9 @@ var (
 type UserDAO struct {
 }
 
-// User
+// User 用户表
 type User struct {
+	gorm.Model
 	FollowCount   int64  `json:"follow_count,omitempty"`                // 关注总数
 	FollowerCount int64  `json:"follower_coun,omitemptyt"`              // 粉丝总数
 	ID            int64  `json:"id,omitempty"`                          // 用户id

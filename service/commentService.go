@@ -2,20 +2,6 @@ package service
 
 import "ByteDanceCamp_tiktok/dao"
 
-type CommentActionService struct {
-	UserId      int64
-	Token       string
-	VideoId     int64
-	ActionType  int64
-	CommentText string
-	CommentId   int64
-}
-
-type CommentListService struct {
-	Token   string
-	VideoId int64
-}
-
 type CommentWithAuthor struct {
 	Id         int64  `json:"id"`
 	User       *User  `json:"user"`
@@ -27,6 +13,7 @@ type CommentActionData struct {
 	CommentWithAuthor `json:"comment,omitempty"`
 }
 
+// CommentAciton 返回评论信息
 func CommentAciton(userId, videoId, commentId, actionType int64, commentText, token string) *CommentActionData {
 	var commentData *CommentActionData
 	if actionType == 1 {
@@ -49,10 +36,10 @@ func CommentAciton(userId, videoId, commentId, actionType int64, commentText, to
 			return nil
 		}
 	}
-
 	return commentData
 }
 
+// CommentList 评论列表
 func CommentList(Token string, VideoId int64) []CommentWithAuthor {
 	commentList := commentDao.QueryCommentListByVideoId(VideoId)
 	if len(commentList) == 0 {

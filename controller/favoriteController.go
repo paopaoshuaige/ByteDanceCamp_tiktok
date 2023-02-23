@@ -7,12 +7,7 @@ import (
 	"strconv"
 )
 
-// FavoriteResponse 是否喜欢
-type FavoriteResponse struct {
-	Response
-}
-
-// FavoriteListResponse 喜欢列表
+// FavoriteListResponse 点赞列表返回结构体
 type FavoriteListResponse struct {
 	Response
 	VideoList []service.VideoDisplay `json:"video_list,omitempty"`

@@ -27,7 +27,7 @@ func NewFavoriteDao() *FavoriteDAO {
 	return FavoriteDao
 }
 
-// AddFavorite 加入点赞
+// AddFavorite 新增点赞
 func (f *FavoriteDAO) AddFavorite(userId, videoId int64) int {
 	if f.IsFavorite(userId, videoId) {
 		return 1

@@ -6,12 +6,6 @@ import (
 	"time"
 )
 
-// VideoService 视频验证
-type VideoService struct {
-	TimeStamp string // 时间戳
-	Token     string // token
-}
-
 // VideoDisplay 视频信息
 type VideoDisplay struct {
 	Id            int64     `json:"id,omitempty" gorm:"primaryKey"` // 视频id

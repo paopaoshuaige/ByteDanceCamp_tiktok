@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+// RelationListResponse 关注列表
 type RelationListResponse struct {
 	Response
 	UserList []service.User `json:"user_list,omitempty"`

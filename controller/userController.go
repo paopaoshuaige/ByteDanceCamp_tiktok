@@ -48,7 +48,7 @@ func Register(c *gin.Context) {
 		})
 	}
 
-	userRegisterData, flag := service.NewRegisterService(username, pass).Register()
+	userRegisterData, flag := service.Register(username, pass)
 
 	if flag == 0 {
 		c.JSON(http.StatusOK, UserRegisterResponse{
@@ -96,7 +96,7 @@ func Login(c *gin.Context) {
 		})
 	}
 
-	userLoginData, flag := service.NewLoginService(username, password).Login()
+	userLoginData, flag := service.Login(username, password)
 
 	if flag == 0 {
 		c.JSON(http.StatusOK, UserLoginResponse{

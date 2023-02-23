@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-// CommentActionResponse 评论属性
+// CommentActionResponse 返回的评论结构体
 type CommentActionResponse struct {
 	Response
 	Id         int64         `json:"id"`
@@ -53,7 +53,7 @@ func CommentAction(c *gin.Context) {
 	}
 }
 
-// CommentList 评论列表
+// CommentList 评论列表功能
 func CommentList(c *gin.Context) {
 	token := c.Query("token")
 	videoId, _ := strconv.ParseInt(c.Query("video_id"), 10, 64)

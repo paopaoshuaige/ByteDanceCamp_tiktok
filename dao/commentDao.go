@@ -10,8 +10,7 @@ var (
 	commentOnce sync.Once
 )
 
-// 评论信息
-// idx_video_id: 查找视频ID对应的所有评论
+// Comment 评论表
 type Comment struct {
 	gorm.Model
 	UserID  int64  `gorm:"not null" json:"user_id"`
@@ -29,6 +28,7 @@ func NewCommentDao() *CommentDAO {
 	return commentDao
 }
 
+// AddComment 新增评论
 func (c *CommentDAO) AddComment(userId, videoId int64, content string) *Comment {
 	comment := &Comment{
 		UserID:  userId,
@@ -44,6 +44,7 @@ func (c *CommentDAO) AddComment(userId, videoId int64, content string) *Comment 
 	return comment
 }
 
+// DeleteComment 删除评论
 func (c *CommentDAO) DeleteComment(commentId int64) error {
 	var comment Comment
 	if err := DB.Model(&Comment{}).Where("id = ? AND deleted_at IS NULL", commentId).First(&comment).Error; err != nil {

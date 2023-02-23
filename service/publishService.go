@@ -8,37 +8,14 @@ import (
 	"strconv"
 )
 
-type PublishService struct {
-	Token      string
-	Title      string
-	Fileheader *multipart.FileHeader
-}
+func Publish(Token, Title string, Fileheader *multipart.FileHeader) error {
 
-type PublishListService struct {
-	UserId string
-	Token  string
-}
-
-type PublishListData struct {
-	VideoList []VideoDisplay `json:"video_list,omitempty"`
-}
-
-func NewPublishService(token, title string, fileheader *multipart.FileHeader) *PublishService {
-	return &PublishService{Token: token, Title: title, Fileheader: fileheader}
-}
-
-func NewPublishListService(userid, token string) *PublishListService {
-	return &PublishListService{UserId: userid, Token: token}
-}
-
-func (p *PublishService) Publish() error {
-
-	userId, err := utils.ParseToken(p.Token)
+	userId, err := utils.ParseToken(Token)
 	if err != nil {
 		return err
 	}
 	// 封面，有点bug，使用默认抖音的
-	videoName := filepath.Base(p.Fileheader.Filename)
+	videoName := filepath.Base(Fileheader.Filename)
 	// videoPath := filepath.Join("./static/video", videoName)
 	// coverPath := "./static/covers/" + videoName
 	// coverName, _ := utils.CoverGenerator(videoPath, coverPath)
@@ -47,7 +24,7 @@ func (p *PublishService) Publish() error {
 	coverUrl := "http://" + PlayURL + ":8989/static/covers/img.png"
 	video := &dao.Video{
 		AuthorId: userId,
-		Title:    p.Title,
+		Title:    Title,
 		PlayURL:  playURL,
 		CoverURL: coverUrl,
 	}
@@ -58,8 +35,8 @@ func (p *PublishService) Publish() error {
 }
 
 // PublishList 根据作者id和传入的id查询视频记录，并倒序列出
-func (p *PublishListService) PublishList() ([]VideoDisplay, error) {
-	userId, _ := strconv.ParseInt(p.UserId, 10, 64)
+func PublishList(UserId, Token string) ([]VideoDisplay, error) {
+	userId, _ := strconv.ParseInt(UserId, 10, 64)
 	videoList, err := videoDao.QueryVideoByUserId(userId)
 	if err != nil {
 		return nil, err
@@ -67,7 +44,7 @@ func (p *PublishListService) PublishList() ([]VideoDisplay, error) {
 	//获得作者信息
 	var userInfo *User
 	videoDisplayList := make([]VideoDisplay, 0, 30)
-	userInfo = QueryUserInfo(p.Token, userId)
+	userInfo = QueryUserInfo(Token, userId)
 	for i := range videoList {
 		videoDisplay := VideoDisplay{
 			Id:            videoList[i].ID,

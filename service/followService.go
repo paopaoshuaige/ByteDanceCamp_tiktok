@@ -2,16 +2,6 @@ package service
 
 import "ByteDanceCamp_tiktok/utils"
 
-type RelationActionService struct {
-	Token    string
-	ToUserId int64
-}
-
-type RelationListService struct {
-	UserId int64
-	Token  string
-}
-
 // Follow 关注操作
 func Follow(toUserId int64, token string) int {
 	userId, err := utils.ParseToken(token)
