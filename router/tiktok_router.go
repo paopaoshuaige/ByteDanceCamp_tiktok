@@ -25,19 +25,19 @@ func InitTikTokRouter(r *gin.Engine) {
 
 	// 互动方向
 	// 点赞
-	tkGroup.POST("/favorite/action/")
+	tkGroup.POST("/favorite/action/", controller.FavoriteAction)
 	// 喜欢列表
-	tkGroup.GET("/favorite/list/")
-	// 评论列表
-	tkGroup.POST("/comment/action/")
+	tkGroup.GET("/favorite/list/", controller.FavoriteList)
+	// 评论功能
+	tkGroup.POST("/comment/action/", controller.CommentAction)
 	// 视频评论列表
-	tkGroup.GET("/comment/list/")
+	tkGroup.GET("/comment/list/", controller.CommentList)
 
 	// 社交接口
 	// 关注
-	tkGroup.POST("/relation/action/")
+	tkGroup.POST("/relation/action/", controller.RelationAction)
 	// 用户关注列表
-	tkGroup.GET("/relatioin/follow/list/")
+	tkGroup.GET("/relation/follow/list/", controller.FollowList)
 	// 用户粉丝列表
-	tkGroup.GET("/relation/follower/list/")
+	tkGroup.GET("/relation/follower/list/", controller.FollowerList)
 }

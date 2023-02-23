@@ -5,15 +5,7 @@ import (
 	"strconv"
 )
 
-type FavoriteListService struct {
-	UserId string
-	Token  string
-}
-
-type FavoriteListData struct {
-	VideoList []VideoDisplay `json:"video_list,omitempty"`
-}
-
+// Favorite 点赞和取消点赞
 func Favorite(token, videoId string, actionType int64) int {
 	Id, err := utils.ParseToken(token)
 	if err != nil {
@@ -28,6 +20,7 @@ func Favorite(token, videoId string, actionType int64) int {
 	return -1
 }
 
+// FavoriteList 点赞列表
 func FavoriteList(userId, token string) []VideoDisplay {
 	User, err := utils.ParseToken(token)
 	if err != nil {
@@ -44,7 +37,6 @@ func FavoriteList(userId, token string) []VideoDisplay {
 		var videoDisplay VideoDisplay
 		video, err := videoDao.QueryVideoById(videoIdList[i])
 		if err != nil {
-			status = 1
 			return nil
 		}
 		videoDisplay = VideoDisplay{
@@ -56,9 +48,9 @@ func FavoriteList(userId, token string) []VideoDisplay {
 			FavoriteCount: video.FavoriteCount,
 			CommentCount:  video.CommentCount,
 		}
-		videoDisplay.Author, _ = NewUserInfoService(token, video.AuthorId).QueryUserInfo()
-		videoDisplay.IsFavorite = favoriteDao.IsFavorite(curUser, videoIdList[i])
+		videoDisplay.Author = QueryUserInfo(token, video.AuthorId)
+		videoDisplay.IsFavorite = favoriteDao.IsFavorite(User, videoIdList[i])
 		videoDisplayList = append(videoDisplayList, videoDisplay)
 	}
-	return &FavoriteListData{VideoList: videoDisplayList}, status
+	return videoDisplayList
 }

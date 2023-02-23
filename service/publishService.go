@@ -67,7 +67,7 @@ func (p *PublishListService) PublishList() ([]VideoDisplay, error) {
 	//获得作者信息
 	var userInfo *User
 	videoDisplayList := make([]VideoDisplay, 0, 30)
-	userInfo = NewUserInfoService(p.Token, userId).QueryUserInfo()
+	userInfo = QueryUserInfo(p.Token, userId)
 	for i := range videoList {
 		videoDisplay := VideoDisplay{
 			Id:            videoList[i].ID,

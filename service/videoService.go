@@ -45,7 +45,7 @@ func Feed(TimeStamp, Token string) (int64, []VideoDisplay) {
 			CommentCount:  videoList[video].CommentCount,
 		}
 		// 视频作者信息
-		videoDisplay.Author = NewUserInfoService(Token, videoList[video].AuthorId).QueryUserInfo()
+		videoDisplay.Author = QueryUserInfo(Token, videoList[video].AuthorId)
 		// 目前用户是否喜欢了该视频
 		videoDisplay.IsFavorite = likeDao.IsFavorite(userToken, videoDisplay.Id)
 		videoDisplayList = append(videoDisplayList, videoDisplay)

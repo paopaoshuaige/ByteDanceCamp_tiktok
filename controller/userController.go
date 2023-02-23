@@ -129,7 +129,7 @@ func Login(c *gin.Context) {
 func QueryUserInfo(c *gin.Context) {
 	token := c.Query("token")
 	userId, _ := strconv.ParseInt(c.Query("user_id"), 10, 64)
-	user := service.NewUserInfoService(token, userId).QueryUserInfo()
+	user := service.QueryUserInfo(token, userId)
 	if user == nil {
 		c.JSON(http.StatusOK, Response{
 			StatusCode: 1,

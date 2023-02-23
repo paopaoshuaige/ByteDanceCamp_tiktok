@@ -1,5 +1,3 @@
-package main
+package service
 
-const (
-	PlayURL = ""
-)
+const PlayURL = "10.205.79.210"
